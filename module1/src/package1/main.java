@@ -8,5 +8,6 @@ public class main {
         event.fillListOfGames();
         event.fillListOfTables();
         event.fillListOfPlayers();
+        event.fitting();
     }
 }
