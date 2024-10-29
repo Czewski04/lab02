@@ -7,10 +7,11 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 public class Event {
-    //ArrayList<Game> listOfGames;
+
     ArrayList<Table> listOfTables;
     ArrayList<Player> listOfPlayers;
     HashMap<Integer, Game> listOfGames;
+
 
     public void fillListOfGames() throws FileNotFoundException {
         listOfGames = new HashMap<>();
@@ -63,9 +64,53 @@ public class Event {
 
     public void fitting(){
         FittingPlayersToGames.fit(listOfPlayers, listOfGames);
+        FittingGamesToTables.fit(listOfGames, listOfTables);
+    }
+
+    public void wyniki(){
+        int licznik1=0;
+        int licznik2=0;
+        int licznik3=0;
+        int licznik4=0;
+        int licznik5=0;
+        int licznik6=0;
+        int licznik7=0;
+        int licznik8=0;
+        int tyle_gra=0;
+
+        //wyniki dopasowania
         for (Player player : listOfPlayers) {
-            if(player.fitted)
-                System.out.println(player.id);
+            if(!player.atTheTable)
+                licznik1++;
+            else if(player.gameInPersonalRanking==1)
+                licznik2++;
+            else if(player.gameInPersonalRanking==2)
+                licznik3++;
+            else if(player.gameInPersonalRanking==3)
+                licznik4++;
         }
+
+        for(Table table: listOfTables){
+            if(table.gamesOnTable.size()>1)
+                licznik8++;
+            if(table.full)
+                licznik5++;
+            else{
+                if(table.freePlaces==table.places)
+                    licznik7++;
+                licznik6 += table.freePlaces;
+            }
+        }
+
+        tyle_gra = licznik2+licznik3+licznik4;
+        System.out.println("\nnie gra: " + licznik1 + " osób");
+        System.out.println("gra: "+ tyle_gra + " osób\n");
+        System.out.println("gra z pierwszego wyboru: "+ licznik2);
+        System.out.println("gra z drugiego wyboru: "+ licznik3);
+        System.out.println("gra z 3 wyboru: "+ licznik4);
+        System.out.println("\npełnych stołów: " + licznik5 + " z "+ listOfTables.size());
+        System.out.println("pozostawiono: "+ licznik6 + " wolnych miejsc przy wszystkich stołach");
+        System.out.println("stoły puste: " + licznik7);
+        System.out.println("więcej niż 1 gra na: " + licznik8 + " stołach");
     }
 }

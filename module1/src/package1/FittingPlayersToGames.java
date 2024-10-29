@@ -22,8 +22,9 @@ public class FittingPlayersToGames {
                             games.get(key).CopiesList.get(j).fittedPlayers.add(player);
                             found = true;
                             player.fitted = true;
+                            player.gameInPersonalRanking = i+1;
                             player.fittedGameId = key;
-                            player.fittedCopyId = j;
+                            //player.fittedCopyId = j;
                             break;
                         }
                     }

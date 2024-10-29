@@ -9,5 +9,6 @@ public class main {
         event.fillListOfTables();
         event.fillListOfPlayers();
         event.fitting();
+        event.wyniki();
     }
 }
