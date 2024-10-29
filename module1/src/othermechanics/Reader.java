@@ -1,4 +1,4 @@
-package package1;
+package othermechanics;
 
 import java.io.File;
 import java.io.FileNotFoundException;

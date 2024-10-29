@@ -1,4 +1,9 @@
-package package1;
+package othermechanics;
+
+import eventresources.Game;
+import eventresources.GameCopy;
+import eventresources.Player;
+import eventresources.Table;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,20 +19,20 @@ public class Scoring {
         int licznik9=0;
 
         for (Player player : players) {
-            if(player.atTheTable) {
+            if(player.isAtTheTable()) {
                 activePlayers++;
-                sumOfSat += player.satisfaction;
+                sumOfSat += player.getSatisfaction();
             }
         }
 
         for(Table table: tables){
-            if(table.freePlaces==table.places)
+            if(table.getFreePlaces()==table.getPlaces())
                     licznik7++;
         }
 
         for(Game game: games.values()){
-            for (GameCopy gameCopy: game.CopiesList){
-                if(gameCopy.onTable)
+            for (GameCopy gameCopy: game.getCopiesList()){
+                if(gameCopy.isOnTable())
                     licznik9++;
             }
         }

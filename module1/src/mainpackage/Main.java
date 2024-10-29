@@ -1,4 +1,6 @@
-package package1;
+package mainpackage;
+
+import eventresources.Event;
 
 import java.io.FileNotFoundException;
 

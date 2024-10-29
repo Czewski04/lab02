@@ -1,4 +1,9 @@
-package package1;
+package eventresources;
+
+import algorithms.FittingGamesToTables;
+import algorithms.FittingPlayersToGames;
+import othermechanics.Reader;
+import othermechanics.Scoring;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
