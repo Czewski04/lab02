@@ -10,7 +10,6 @@ public class Player {
     Integer gameInPersonalRanking;
     Integer fittedGameId;
     float satisfaction;
-   //Integer fittedCopyId;
 
 
     public Player(Integer id, ArrayList<Integer> gamesIdListStringType) {
@@ -20,7 +19,6 @@ public class Player {
         this.atTheTable = false;
         this.gameInPersonalRanking = null;
         this.fittedGameId = null;
-        //this.fittedCopyId = null;
         this.satisfaction = 0;
     }
 }

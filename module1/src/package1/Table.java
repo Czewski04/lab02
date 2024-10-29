@@ -9,7 +9,6 @@ public class Table {
     ArrayList<GameCopy> gamesOnTable;
     boolean full;
 
-
     public Table(Integer id, Integer places) {
         this.id = id;
         this.places = places;

@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FittingGamesToTables {
+
     public static void fit(HashMap<Integer, Game> games, ArrayList<Table> tables) {
         int i, fullCounter, maxPlaces=0;
+
         for(Table table : tables) {
             if(maxPlaces<table.places)
                 maxPlaces = table.places;
         }
+
         for (Game game : games.values()) {
             for(GameCopy gameCopy : game.CopiesList){
                 if(gameCopy.fittedPlayers.size()>=game.minNumberOfPlayers){

@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class FittingPlayersToGames {
-    public static void fit(ArrayList<Player> players, HashMap<Integer, Game> games) {
+
+    public static void fit1(ArrayList<Player> players, HashMap<Integer, Game> games) {
         boolean found;
         int i;
         Collections.sort(players, new PlayerComparator());
@@ -23,21 +24,58 @@ public class FittingPlayersToGames {
                             player.fitted = true;
                             player.gameInPersonalRanking = i+1;
                             player.fittedGameId = key;
-                            //player.fittedCopyId = j;
                             break;
                         }
                     }
                 }
                 i++;
             }
-//            if(!found){
-//                for(int k=players.indexOf(player)-1; k>=0; k-=1){
-//                    if(player.preferredGamesList.contains(players.get(k).preferredGamesList.getLast())){
-//                        players.get(k).fitted = false;
-//                        games.get(players.get(k).fittedGameId).CopiesList.get(players.get(k).fittedCopyId).fittedPlayers.remove(players.get(k));
-//                    }
-//                }
-//            }
+        }
+    }
+
+    public static void fit2(ArrayList<Player> players, HashMap<Integer, Game> games) {
+        HashMap<Integer, Game> tmpGameList = new HashMap<>();
+        boolean found;
+        Collections.sort(players, new PlayerComparator());
+        for (Player player : players) {
+            found=false;
+            while(!found) {
+                for(int h=0; h<player.preferredGamesList.size() && !found; h++) {
+                    int key = player.preferredGamesList.get(h);
+                    if(tmpGameList.containsKey(key)){
+                        for(int j=0; j<tmpGameList.get(key).numberOfCopies; j++){
+                            if(tmpGameList.get(key).CopiesList.get(j).fittedPlayers.size() < tmpGameList.get(key).maxNumberOfPlayers)
+                            {
+                                tmpGameList.get(key).CopiesList.get(j).fittedPlayers.add(player);
+                                found = true;
+                                player.fitted = true;
+                                player.gameInPersonalRanking = h+1;
+                                player.fittedGameId = key;
+                                break;
+                            }
+                        }
+                    }
+                }
+            for(int h=0; h<player.preferredGamesList.size() && !found; h++) {
+                    int key = player.preferredGamesList.get(h);
+                    if(games.containsKey(key)){
+                        for(int j=0; j<games.get(key).numberOfCopies; j++){
+                            if(games.get(key).CopiesList.get(j).fittedPlayers.size() < games.get(key).maxNumberOfPlayers)
+                            {
+                                games.get(key).CopiesList.get(j).fittedPlayers.add(player);
+                                tmpGameList.put(key, games.get(key));
+                                found = true;
+                                player.fitted = true;
+                                player.gameInPersonalRanking = h+1;
+                                player.fittedGameId = key;
+                                break;
+                            }
+                        }
+                    }
+                }
+            if(!player.fitted)
+                break;
+            }
         }
     }
 }

@@ -38,4 +38,13 @@ public class Reader {
         return elements;
     }
 
+    public static float[] weightReader() {
+        float[] weights = new float[3];
+        Scanner scanner = new Scanner(System.in);
+        for(int i=0; i<3; i++){
+            weights[i] = scanner.nextFloat();
+        }
+        return weights;
+    }
+
 }

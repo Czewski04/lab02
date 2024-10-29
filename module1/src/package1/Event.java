@@ -11,7 +11,12 @@ public class Event {
     ArrayList<Table> listOfTables;
     ArrayList<Player> listOfPlayers;
     HashMap<Integer, Game> listOfGames;
-
+    float score;
+    float score1;
+    ArrayList<Table> listOfTables1;
+    ArrayList<Player> listOfPlayers1;
+    HashMap<Integer, Game> listOfGames1;
+    float[] weights = new float[3];
 
     public void fillListOfGames() throws FileNotFoundException {
         listOfGames = new HashMap<>();
@@ -62,76 +67,47 @@ public class Event {
         }
     }
 
-    public void fitting(){
-        FittingPlayersToGames.fit(listOfPlayers, listOfGames);
+    public void fillWeights() {
+        weights = Reader.weightReader();
+    }
+
+    public void fitting1(){
+        FittingPlayersToGames.fit1(listOfPlayers, listOfGames);
         FittingGamesToTables.fit(listOfGames, listOfTables);
     }
 
-    public void wyniki(){
-        int licznik1=0;
-        int licznik2=0;
-        int licznik3=0;
-        int licznik4=0;
-        int licznik5=0;
-        int licznik6=0;
-        int licznik7=0;
-        int licznik8=0;
-        int licznik9=0;
-        float sumOfSat=0;
-        int tyle_gra=0;
-        int kara=0;
+    public void fitting2(){
+        FittingPlayersToGames.fit2(listOfPlayers, listOfGames);
+        FittingGamesToTables.fit(listOfGames, listOfTables);
+    }
 
-        //wyniki dopasowania
-        for (Player player : listOfPlayers) {
-            if(player.atTheTable)
-                sumOfSat += player.satisfaction;
-            if(!player.atTheTable)
-                licznik1++;
-            else if(player.gameInPersonalRanking==1)
-                licznik2++;
-            else if(player.gameInPersonalRanking==2)
-                licznik3++;
-            else if(player.gameInPersonalRanking==3)
-                licznik4++;
+    public void calculateScore(){
+        //Scoring.testCalculateParametrs(listOfGames, listOfPlayers, listOfTables);
+        score = Scoring.calculateFinalScore(listOfGames, listOfPlayers, listOfTables, weights);
+        System.out.println(score);
+    }
+
+    public void clearLists(){
+        listOfTables.clear();
+        listOfPlayers.clear();
+        listOfGames.clear();
+    }
+
+    public void copyLists(){
+        listOfTables1 = new ArrayList<>(listOfTables);
+        listOfPlayers1 = new ArrayList<>(listOfPlayers);
+        listOfGames1 = new HashMap<>(listOfGames);
+        score1 = score;
+    }
+
+    public void compareResults(){
+        if(score>score1){
+            //Scoring.testCalculateParametrs(listOfGames, listOfPlayers, listOfTables);
+            System.out.println("2nd win " + score);
         }
-
-        for(Table table: listOfTables){
-            if(table.gamesOnTable.size()>1)
-                licznik8++;
-            if(table.full)
-                licznik5++;
-            else{
-                if(table.freePlaces==table.places)
-                    licznik7++;
-                licznik6 += table.freePlaces;
-            }
+        else{
+            //Scoring.testCalculateParametrs(listOfGames1, listOfPlayers1, listOfTables1);
+            System.out.println("1st win " + score1);
         }
-
-        for(Game game: listOfGames.values()){
-            for (GameCopy gameCopy: game.CopiesList){
-                if(gameCopy.onTable)
-                    licznik9++;
-            }
-        }
-
-        if(listOfTables.size()-licznik7-licznik9<0)
-            kara = listOfTables.size()-licznik7-licznik9;
-
-        tyle_gra = licznik2+licznik3+licznik4;
-        System.out.println("\nnie gra: " + licznik1 + " osób");
-        System.out.println("gra: "+ tyle_gra + " osób\n");
-        System.out.println("gra z pierwszego wyboru: "+ licznik2);
-        System.out.println("gra z drugiego wyboru: "+ licznik3);
-        System.out.println("gra z 3 wyboru: "+ licznik4);
-        System.out.println("\npełnych stołów: " + licznik5 + " z "+ listOfTables.size());
-        System.out.println("pozostawiono: "+ licznik6 + " wolnych miejsc przy wszystkich stołach");
-        System.out.println("stoły puste: " + licznik7);
-        System.out.println("więcej niż 1 gra na: " + licznik8 + " stołach");
-        System.out.println("gier na stołach: " + licznik9);
-
-        System.out.println("\nsatysfakcja: " + sumOfSat);
-        System.out.println("kara: " + kara);
-        float wynik=tyle_gra+sumOfSat+kara;
-        System.out.println("wynik: " + wynik);
     }
 }
