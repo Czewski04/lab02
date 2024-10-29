@@ -24,6 +24,7 @@ public class FittingGamesToTables {
                                     table.freePlaces -= gameCopy.fittedPlayers.size();
                                     for(Player player : gameCopy.fittedPlayers){
                                         player.atTheTable = true;
+                                        player.satisfaction = (float) 1/player.gameInPersonalRanking;
                                     }
                                     if(table.freePlaces<2)
                                         table.full = true;

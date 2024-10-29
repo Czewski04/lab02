@@ -9,6 +9,7 @@ public class Player {
     boolean atTheTable;
     Integer gameInPersonalRanking;
     Integer fittedGameId;
+    float satisfaction;
    //Integer fittedCopyId;
 
 
@@ -20,5 +21,6 @@ public class Player {
         this.gameInPersonalRanking = null;
         this.fittedGameId = null;
         //this.fittedCopyId = null;
+        this.satisfaction = 0;
     }
 }

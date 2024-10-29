@@ -76,10 +76,15 @@ public class Event {
         int licznik6=0;
         int licznik7=0;
         int licznik8=0;
+        int licznik9=0;
+        float sumOfSat=0;
         int tyle_gra=0;
+        int kara=0;
 
         //wyniki dopasowania
         for (Player player : listOfPlayers) {
+            if(player.atTheTable)
+                sumOfSat += player.satisfaction;
             if(!player.atTheTable)
                 licznik1++;
             else if(player.gameInPersonalRanking==1)
@@ -102,6 +107,16 @@ public class Event {
             }
         }
 
+        for(Game game: listOfGames.values()){
+            for (GameCopy gameCopy: game.CopiesList){
+                if(gameCopy.onTable)
+                    licznik9++;
+            }
+        }
+
+        if(listOfTables.size()-licznik7-licznik9<0)
+            kara = listOfTables.size()-licznik7-licznik9;
+
         tyle_gra = licznik2+licznik3+licznik4;
         System.out.println("\nnie gra: " + licznik1 + " osób");
         System.out.println("gra: "+ tyle_gra + " osób\n");
@@ -112,5 +127,11 @@ public class Event {
         System.out.println("pozostawiono: "+ licznik6 + " wolnych miejsc przy wszystkich stołach");
         System.out.println("stoły puste: " + licznik7);
         System.out.println("więcej niż 1 gra na: " + licznik8 + " stołach");
+        System.out.println("gier na stołach: " + licznik9);
+
+        System.out.println("\nsatysfakcja: " + sumOfSat);
+        System.out.println("kara: " + kara);
+        float wynik=tyle_gra+sumOfSat+kara;
+        System.out.println("wynik: " + wynik);
     }
 }
