@@ -16,12 +16,17 @@ public class Event {
     ArrayList<Table> listOfTables;
     ArrayList<Player> listOfPlayers;
     HashMap<Integer, Game> listOfGames;
-    float score;
-    float score1;
     ArrayList<Table> listOfTables1;
     ArrayList<Player> listOfPlayers1;
     HashMap<Integer, Game> listOfGames1;
+    ArrayList<Table> listOfTables2;
+    ArrayList<Player> listOfPlayers2;
+    HashMap<Integer, Game> listOfGames2;
+    ArrayList<Table> listOfTables3;
+    ArrayList<Player> listOfPlayers3;
+    HashMap<Integer, Game> listOfGames3;
     float[] weights = new float[3];
+    float[] scores = new float[4];
 
     public void fillListOfGames() throws FileNotFoundException {
         listOfGames = new HashMap<>();
@@ -78,18 +83,28 @@ public class Event {
 
     public void fitting1(){
         FittingPlayersToGames.fit1(listOfPlayers, listOfGames);
-        FittingGamesToTables.fit(listOfGames, listOfTables);
+        FittingGamesToTables.fit1(listOfGames, listOfTables);
     }
 
     public void fitting2(){
         FittingPlayersToGames.fit2(listOfPlayers, listOfGames);
-        FittingGamesToTables.fit(listOfGames, listOfTables);
+        FittingGamesToTables.fit1(listOfGames, listOfTables);
+    }
+
+    public void fitting3(){
+        FittingPlayersToGames.fit1(listOfPlayers, listOfGames);
+        FittingGamesToTables.fit2(listOfGames, listOfTables);
+    }
+
+    public void fitting4(){
+        FittingPlayersToGames.fit2(listOfPlayers, listOfGames);
+        FittingGamesToTables.fit2(listOfGames, listOfTables);
     }
 
     public void calculateScore(){
         //Scoring.testCalculateParametrs(listOfGames, listOfPlayers, listOfTables);
-        score = Scoring.calculateFinalScore(listOfGames, listOfPlayers, listOfTables, weights);
-        System.out.println(score);
+        scores[3] = Scoring.calculateFinalScore(listOfGames, listOfPlayers, listOfTables, weights);
+        System.out.println(scores[3]);
     }
 
     public void clearLists(){
@@ -98,21 +113,38 @@ public class Event {
         listOfGames.clear();
     }
 
-    public void copyLists(){
+    public void copyToListst1(){
         listOfTables1 = new ArrayList<>(listOfTables);
         listOfPlayers1 = new ArrayList<>(listOfPlayers);
         listOfGames1 = new HashMap<>(listOfGames);
-        score1 = score;
+        scores[0] = scores[3];
     }
 
+    public void copyToListst2(){
+        listOfTables2 = new ArrayList<>(listOfTables);
+        listOfPlayers2 = new ArrayList<>(listOfPlayers);
+        listOfGames2 = new HashMap<>(listOfGames);
+        scores[1] = scores[3];
+    }
+
+    public void copyToListst3(){
+        listOfTables3 = new ArrayList<>(listOfTables);
+        listOfPlayers3 = new ArrayList<>(listOfPlayers);
+        listOfGames3 = new HashMap<>(listOfGames);
+        scores[2] = scores[3];
+    }
+
+
     public void compareResults(){
-        if(score>score1){
-            //Scoring.testCalculateParametrs(listOfGames, listOfPlayers, listOfTables);
-            System.out.println("2nd win " + score);
+        float result = 0;
+        int bestResultIndex = 0;
+        for(int i=0; i<scores.length; i++){
+            if(scores[i]>result){
+                result = scores[i];
+                bestResultIndex = i;
+            }
         }
-        else{
-            //Scoring.testCalculateParametrs(listOfGames1, listOfPlayers1, listOfTables1);
-            System.out.println("1st win " + score1);
-        }
+        bestResultIndex +=1;
+        System.out.println("Wygrywa alogrytm: "+ bestResultIndex + " z wynikiem: "+ result);
     }
 }

@@ -9,6 +9,8 @@ public class Main {
         Event event = new Event();
         attempt1(event);
         attempt2(event);
+        attempt3(event);
+        attempt4(event);
     }
 
     public static void attempt1(Event event) throws FileNotFoundException {
@@ -18,7 +20,7 @@ public class Main {
         event.fillListOfPlayers();
         event.fitting1();
         event.calculateScore();
-        event.copyLists();
+        event.copyToListst1();
         event.clearLists();
     }
 
@@ -27,6 +29,26 @@ public class Main {
         event.fillListOfTables();
         event.fillListOfPlayers();
         event.fitting2();
+        event.calculateScore();
+        event.copyToListst2();
+        event.clearLists();
+    }
+
+    public static void attempt3(Event event) throws FileNotFoundException {
+        event.fillListOfGames();
+        event.fillListOfTables();
+        event.fillListOfPlayers();
+        event.fitting3();
+        event.calculateScore();
+        event.copyToListst3();
+        event.clearLists();
+    }
+
+    public static void attempt4(Event event) throws FileNotFoundException {
+        event.fillListOfGames();
+        event.fillListOfTables();
+        event.fillListOfPlayers();
+        event.fitting4();
         event.calculateScore();
         event.compareResults();
     }
