@@ -113,7 +113,8 @@ public class Event {
 
     public void refitting(){
         FittingGamesToTables.refittingTest(listOfGames4, listOfTables);
-        FittingGamesToTables.refittingTest(listOfGames4, listOfTables);
+        FittingGamesToTables.refitting2Test(listOfGames4, listOfTables);
+        //FittingGamesToTables.refitting2Test(listOfGames4, listOfTables);
     }
 
     public void calculateScore(){
