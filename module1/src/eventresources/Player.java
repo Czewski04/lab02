@@ -10,6 +10,7 @@ public class Player {
     private Integer gameInPersonalRanking;
     private Integer fittedGameId;
     private float satisfaction;
+    private float tmpSatisfaction;
 
 
     public Player(Integer id, ArrayList<Integer> gamesIdListStringType) {
@@ -60,5 +61,13 @@ public class Player {
 
     public void setSatisfaction(float satisfaction) {
         this.satisfaction = satisfaction;
+    }
+
+    public float getTmpSatisfaction() {
+        return tmpSatisfaction;
+    }
+
+    public void setTmpSatisfaction(float tmpSatisfaction) {
+        this.tmpSatisfaction = tmpSatisfaction;
     }
 }

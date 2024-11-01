@@ -14,7 +14,7 @@ public class Game {
         this.numberOfCopies = numberOfCopies;
         this.CopiesList = new ArrayList<>();
         for(int i=0; i<numberOfCopies; i++) {
-            this.CopiesList.add(new GameCopy());
+            this.CopiesList.add(new GameCopy(minNumberOfPlayers));
         }
     }
 

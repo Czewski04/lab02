@@ -1,6 +1,7 @@
 package algorithms;
 
 import eventresources.Game;
+import eventresources.GameCopy;
 import eventresources.Player;
 import othermechanics.PlayerComparator;
 
@@ -82,4 +83,44 @@ public class FittingPlayersToGames {
             }
         }
     }
+
+    public static ArrayList<GameCopy> fit3_testing(ArrayList<Player> players, HashMap<Integer, Game> games) {
+        ArrayList<GameCopy> gamesReadyToPlay = new ArrayList<>();
+        boolean found;
+        int i;
+        players.sort(new PlayerComparator());
+        for (Player player : players) {
+            i=0;
+            found=false;
+            while(!found && i<player.getPreferredGamesList().size()) {
+                int key = player.getPreferredGamesList().get(i);
+                if(games.containsKey(key)){
+                    for(int j=0; j<games.get(key).getNumberOfCopies(); j++){
+                        if(games.get(key).getCopiesList().get(j).getFittedPlayers().size() < games.get(key).getMaxNumberOfPlayers())
+                        {
+                            games.get(key).getCopiesList().get(j).getFittedPlayers().add(player);
+                            found = true;
+                            player.setFitted(true);
+                            player.setGameInPersonalRanking(i+1);
+                            player.setFittedGameId(key);
+
+                            calculateTmpSatisfaction(player);
+                            games.get(key).getCopiesList().get(j).addTmpSatisfaction(player.getTmpSatisfaction());
+                            if(games.get(key).getCopiesList().get(j).getFittedPlayers().size() >= games.get(key).getMinNumberOfPlayers() && !gamesReadyToPlay.contains(games.get(key).getCopiesList().get(j)))
+                               gamesReadyToPlay.add(games.get(key).getCopiesList().get(j));
+                            break;
+                        }
+                    }
+                }
+                i++;
+            }
+        }
+
+        return gamesReadyToPlay;
+    }
+
+    private static void calculateTmpSatisfaction(Player player) {
+        player.setTmpSatisfaction((float) 1/player.getGameInPersonalRanking());
+    }
+
 }

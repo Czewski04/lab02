@@ -25,6 +25,11 @@ public class Event {
     ArrayList<Table> listOfTables3;
     ArrayList<Player> listOfPlayers3;
     HashMap<Integer, Game> listOfGames3;
+
+    ArrayList<Player> listOfPlayers4;
+    ArrayList<GameCopy> listOfGames4;
+    ArrayList<Table> listOfTables4;
+
     float[] weights = new float[3];
     float[] scores = new float[4];
 
@@ -101,6 +106,16 @@ public class Event {
         FittingGamesToTables.fit2(listOfGames, listOfTables);
     }
 
+    public void fitting5_test(){
+        listOfGames4 = new ArrayList<>(FittingPlayersToGames.fit3_testing(listOfPlayers, listOfGames));
+        FittingGamesToTables.fit3_testing(listOfGames4, listOfTables);
+    }
+
+    public void refitting(){
+        FittingGamesToTables.refittingTest(listOfGames4, listOfTables);
+        FittingGamesToTables.refittingTest(listOfGames4, listOfTables);
+    }
+
     public void calculateScore(){
         //Scoring.testCalculateParametrs(listOfGames, listOfPlayers, listOfTables);
         scores[3] = Scoring.calculateFinalScore(listOfGames, listOfPlayers, listOfTables, weights);
@@ -146,5 +161,15 @@ public class Event {
         }
         bestResultIndex +=1;
         System.out.println("Wygrywa alogrytm: "+ bestResultIndex + " z wynikiem: "+ result);
+        Scoring.testCalculateParametrs(listOfGames1, listOfPlayers1, listOfTables1);
+    }
+
+    public void showTestResults(){
+        System.out.println(Scoring.calculateFinalScore(listOfGames4, listOfPlayers, listOfTables, weights));
+        Scoring.testCalculateParametrs(listOfGames4, listOfPlayers, listOfTables);
+    }
+
+    public void debug(){
+        System.out.println("kupa");
     }
 }
