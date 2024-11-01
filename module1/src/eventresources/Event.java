@@ -15,30 +15,36 @@ public class Event {
 
     ArrayList<Table> listOfTables;
     ArrayList<Player> listOfPlayers;
-    HashMap<Integer, Game> listOfGames;
+    HashMap<Integer, Game> mapOfGames;
+    ArrayList<GameCopy> listOfGames;
+
     ArrayList<Table> listOfTables1;
     ArrayList<Player> listOfPlayers1;
-    HashMap<Integer, Game> listOfGames1;
+    HashMap<Integer, Game> mapOfGames1;
+    ArrayList<GameCopy> listOfGames1;
+
     ArrayList<Table> listOfTables2;
     ArrayList<Player> listOfPlayers2;
-    HashMap<Integer, Game> listOfGames2;
+    HashMap<Integer, Game> mapOfGames2;
+    ArrayList<GameCopy> listOfGames2;
+
     ArrayList<Table> listOfTables3;
     ArrayList<Player> listOfPlayers3;
-    HashMap<Integer, Game> listOfGames3;
+    HashMap<Integer, Game> mapOfGames3;
+    ArrayList<GameCopy> listOfGames3;
 
-    ArrayList<Player> listOfPlayers4;
-    ArrayList<GameCopy> listOfGames4;
-    ArrayList<Table> listOfTables4;
 
     float[] weights = new float[3];
     float[] scores = new float[4];
 
     public void fillListOfGames() throws FileNotFoundException {
-        listOfGames = new HashMap<>();
+        mapOfGames = new HashMap<>();
+        listOfGames = new ArrayList<>();
+
         int i=0;
         try{
             while(true){
-                listOfGames.put(Integer.valueOf(Reader.gameReader(i)[0]), new Game(Integer.valueOf(Reader.gameReader(i)[1]),Integer.valueOf(Reader.gameReader(i)[2]),Integer.valueOf(Reader.gameReader(i)[3])));
+                mapOfGames.put(Integer.valueOf(Reader.gameReader(i)[0]), new Game(Integer.valueOf(Reader.gameReader(i)[1]),Integer.valueOf(Reader.gameReader(i)[2]),Integer.valueOf(Reader.gameReader(i)[3])));
                 i++;
             }
         }
@@ -70,8 +76,8 @@ public class Event {
 
                 ArrayList<Integer> gamesIdList = new ArrayList<>();
 
-                for(int j=0; j<gamesIdListStringType.size(); j++){
-                    gamesIdList.add(Integer.parseInt(gamesIdListStringType.get(j)));
+                for (String s : gamesIdListStringType) {
+                    gamesIdList.add(Integer.parseInt(s));
                 }
                 listOfPlayers.add(new Player(Integer.valueOf(Reader.playerReader(i)[0]), gamesIdList));
                 i++;
@@ -86,67 +92,72 @@ public class Event {
         weights = Reader.weightReader();
     }
 
-    public void fitting1(){
-        FittingPlayersToGames.fit1(listOfPlayers, listOfGames);
-        FittingGamesToTables.fit1(listOfGames, listOfTables);
+
+    public void fitting1BaseFitting(){
+        FittingPlayersToGames.fit1GamesReadyToPlayMethod(listOfPlayers, mapOfGames, listOfGames);
+        FittingGamesToTables.fit1GameSatisfactionPriority(listOfGames, listOfTables);
+        FittingGamesToTables.clearOverloadedTabelsAndRefitting(listOfGames, listOfTables);
+        FittingGamesToTables.clearNotFullTables(listOfGames, listOfTables);
+        FittingPlayersToGames.fit1GamesReadyToPlayMethod(listOfPlayers, mapOfGames, listOfGames);
+        FittingGamesToTables.complementFreePlaces(listOfGames, listOfTables);
     }
 
-    public void fitting2(){
-        FittingPlayersToGames.fit2(listOfPlayers, listOfGames);
-        FittingGamesToTables.fit1(listOfGames, listOfTables);
+    public void fitting2ForHighPenalty(){
+        FittingPlayersToGames.fit1GamesReadyToPlayMethod(listOfPlayers, mapOfGames, listOfGames);
+        FittingGamesToTables.fit1GameSatisfactionPriority(listOfGames, listOfTables);
+        FittingGamesToTables.clearOverloadedTabelsAndRefitting(listOfGames, listOfTables);
     }
 
-    public void fitting3(){
-        FittingPlayersToGames.fit1(listOfPlayers, listOfGames);
-        FittingGamesToTables.fit2(listOfGames, listOfTables);
+    public void fitting3PlayedGamesPriorityForHighPenalty(){
+        FittingPlayersToGames.fit2PlayedGamePiority(listOfPlayers, mapOfGames, listOfGames);
+        FittingGamesToTables.fit1GameSatisfactionPriority(listOfGames, listOfTables);
+        FittingGamesToTables.clearOverloadedTabelsAndRefitting(listOfGames, listOfTables);
     }
 
-    public void fitting4(){
-        FittingPlayersToGames.fit2(listOfPlayers, listOfGames);
-        FittingGamesToTables.fit2(listOfGames, listOfTables);
+    public void fitting4PlayedGamesPriority(){
+        FittingPlayersToGames.fit2PlayedGamePiority(listOfPlayers, mapOfGames, listOfGames);
+        FittingGamesToTables.fit1GameSatisfactionPriority(listOfGames, listOfTables);
+        FittingGamesToTables.clearOverloadedTabelsAndRefitting(listOfGames, listOfTables);
+        FittingGamesToTables.clearNotFullTables(listOfGames, listOfTables);
+        FittingPlayersToGames.fit2PlayedGamePiority(listOfPlayers, mapOfGames, listOfGames);
+        FittingGamesToTables.complementFreePlaces(listOfGames, listOfTables);
     }
 
-    public void fitting5_test(){
-        listOfGames4 = new ArrayList<>(FittingPlayersToGames.fit3_testing(listOfPlayers, listOfGames));
-        FittingGamesToTables.fit3_testing(listOfGames4, listOfTables);
-    }
-
-    public void refitting(){
-        FittingGamesToTables.refittingTest(listOfGames4, listOfTables);
-        FittingGamesToTables.refitting2Test(listOfGames4, listOfTables);
-        //FittingGamesToTables.refitting2Test(listOfGames4, listOfTables);
-    }
 
     public void calculateScore(){
         //Scoring.testCalculateParametrs(listOfGames, listOfPlayers, listOfTables);
-        scores[3] = Scoring.calculateFinalScore(listOfGames, listOfPlayers, listOfTables, weights);
+        scores[3] = Scoring.calculateFinalScore(mapOfGames, listOfPlayers, listOfTables, weights);
         System.out.println(scores[3]);
     }
 
     public void clearLists(){
         listOfTables.clear();
         listOfPlayers.clear();
+        mapOfGames.clear();
         listOfGames.clear();
     }
 
     public void copyToListst1(){
         listOfTables1 = new ArrayList<>(listOfTables);
         listOfPlayers1 = new ArrayList<>(listOfPlayers);
-        listOfGames1 = new HashMap<>(listOfGames);
+        listOfGames1 = new ArrayList<>(listOfGames);
+        mapOfGames1 = new HashMap<>(mapOfGames);
         scores[0] = scores[3];
     }
 
     public void copyToListst2(){
         listOfTables2 = new ArrayList<>(listOfTables);
         listOfPlayers2 = new ArrayList<>(listOfPlayers);
-        listOfGames2 = new HashMap<>(listOfGames);
+        listOfGames2 = new ArrayList<>(listOfGames);
+        mapOfGames2 = new HashMap<>(mapOfGames);
         scores[1] = scores[3];
     }
 
     public void copyToListst3(){
         listOfTables3 = new ArrayList<>(listOfTables);
         listOfPlayers3 = new ArrayList<>(listOfPlayers);
-        listOfGames3 = new HashMap<>(listOfGames);
+        listOfGames3 = new ArrayList<>(listOfGames);
+        mapOfGames3 = new HashMap<>(mapOfGames);
         scores[2] = scores[3];
     }
 
@@ -162,15 +173,11 @@ public class Event {
         }
         bestResultIndex +=1;
         System.out.println("Wygrywa alogrytm: "+ bestResultIndex + " z wynikiem: "+ result);
-        Scoring.testCalculateParametrs(listOfGames1, listOfPlayers1, listOfTables1);
+        Scoring.testCalculateParametrs(mapOfGames1, listOfPlayers1, listOfTables1);
     }
 
-    public void showTestResults(){
-        System.out.println(Scoring.calculateFinalScore(listOfGames4, listOfPlayers, listOfTables, weights));
-        Scoring.testCalculateParametrs(listOfGames4, listOfPlayers, listOfTables);
-    }
-
-    public void debug(){
-        System.out.println("kupa");
-    }
+//    public void showTestResults(){
+//        System.out.println(Scoring.calculateFinalScore(listOfGames, listOfPlayers, listOfTables, weights));
+//        Scoring.testCalculateParametrs(listOfGames, listOfPlayers, listOfTables);
+//    }
 }
