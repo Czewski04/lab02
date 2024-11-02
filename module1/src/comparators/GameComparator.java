@@ -1,7 +1,6 @@
-package othermechanics;
+package comparators;
 
 import eventresources.GameCopy;
-import eventresources.Player;
 
 import java.util.Comparator;
 

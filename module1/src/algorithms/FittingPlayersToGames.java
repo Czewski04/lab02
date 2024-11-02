@@ -3,7 +3,7 @@ package algorithms;
 import eventresources.Game;
 import eventresources.GameCopy;
 import eventresources.Player;
-import othermechanics.PlayerComparator;
+import comparators.PlayerComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

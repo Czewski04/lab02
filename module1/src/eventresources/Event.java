@@ -33,7 +33,6 @@ public class Event {
     HashMap<Integer, Game> mapOfGames3;
     ArrayList<GameCopy> listOfGames3;
 
-
     float[] weights = new float[3];
     float[] scores = new float[4];
 
@@ -44,7 +43,7 @@ public class Event {
         int i=0;
         try{
             while(true){
-                mapOfGames.put(Integer.valueOf(Reader.gameReader(i)[0]), new Game(Integer.valueOf(Reader.gameReader(i)[1]),Integer.valueOf(Reader.gameReader(i)[2]),Integer.valueOf(Reader.gameReader(i)[3])));
+                mapOfGames.put(Integer.valueOf(Reader.gameReader(i)[0]), new Game(Integer.valueOf(Reader.gameReader(i)[0]), Integer.valueOf(Reader.gameReader(i)[1]), Integer.valueOf(Reader.gameReader(i)[2]), Integer.valueOf(Reader.gameReader(i)[3])));
                 i++;
             }
         }
@@ -125,9 +124,7 @@ public class Event {
 
 
     public void calculateScore(){
-        //Scoring.testCalculateParametrs(listOfGames, listOfPlayers, listOfTables);
         scores[3] = Scoring.calculateFinalScore(mapOfGames, listOfPlayers, listOfTables, weights);
-        System.out.println(scores[3]);
     }
 
     public void clearLists(){
@@ -171,13 +168,80 @@ public class Event {
                 bestResultIndex = i;
             }
         }
-        bestResultIndex +=1;
-        System.out.println("Wygrywa alogrytm: "+ bestResultIndex + " z wynikiem: "+ result);
-        Scoring.testCalculateParametrs(mapOfGames1, listOfPlayers1, listOfTables1);
+        showResults(bestResultIndex, result);
     }
 
-//    public void showTestResults(){
-//        System.out.println(Scoring.calculateFinalScore(listOfGames, listOfPlayers, listOfTables, weights));
-//        Scoring.testCalculateParametrs(listOfGames, listOfPlayers, listOfTables);
-//    }
+    public void showResults(int bestResultIndex, float bestScore){
+        showBestResult(bestScore);
+
+        switch(bestResultIndex){
+            case 0:
+                showTableArrangement(listOfTables1);
+                Scoring.testCalculateParametrs(mapOfGames1, listOfPlayers1, listOfTables1);
+                break;
+            case 1:
+                showTableArrangement(listOfTables2);
+                Scoring.testCalculateParametrs(mapOfGames2, listOfPlayers2, listOfTables2);
+                break;
+            case 2:
+                showTableArrangement(listOfTables3);
+                Scoring.testCalculateParametrs(mapOfGames3, listOfPlayers3, listOfTables3);
+                break;
+            case 3:
+                showTableArrangement(listOfTables);
+                Scoring.testCalculateParametrs(mapOfGames, listOfPlayers, listOfTables);
+                break;
+        }
+
+    }
+
+    public void showTableArrangement(ArrayList<Table> tables) {
+        System.out.println("\n=========== Table layout ==========\n");
+        for (Table table : tables) {
+            System.out.println("Table " + table.getId() + ":");
+            System.out.println("-------------------------------------");
+            System.out.printf("%-10s %-10s%n", "Game", "Players");
+            System.out.println("-------------------------------------");
+
+            for (GameCopy gameOnTable : table.getGamesOnTable()) {
+                System.out.printf("%-10d ", gameOnTable.getMainGameId());
+                for (Player playerAtTheTable : gameOnTable.getFittedPlayers()) {
+                    System.out.print(playerAtTheTable.getId() + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+    }
+
+    public void showBestResult(float bestScore) {
+        String scoreStr = " " + bestScore + " ";
+        int frameWidth = 15;
+
+        for (int i = 0; i < frameWidth + 2; i++) {
+            System.out.print("•");
+        }
+        System.out.println();
+
+        System.out.print("•");
+        System.out.print("  BEST RESULT  ");
+        System.out.println("•");
+
+        int padding = (frameWidth - scoreStr.length()) / 2;
+        System.out.print("•");
+        for (int i = 0; i < padding; i++) {
+            System.out.print(" ");
+        }
+        System.out.print(scoreStr);
+        for (int i = 0; i < (frameWidth - scoreStr.length() - padding); i++) {
+            System.out.print(" ");
+        }
+        System.out.println("•");
+
+        for (int i = 0; i < frameWidth + 2; i++) {
+            System.out.print("•");
+        }
+        System.out.println();
+    }
+
 }

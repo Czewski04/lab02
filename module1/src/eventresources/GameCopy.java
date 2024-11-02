@@ -7,12 +7,14 @@ public class GameCopy {
     private boolean onTable;
     private float tmpSatisfaction;
     private int minNumbersOfPlayers;
+    private int mainGameId;
 
-    public GameCopy(int minNumbersOfPlayers) {
+    public GameCopy(int mainGameId, int minNumbersOfPlayers) {
         this.fittedPlayers = new ArrayList<>();
         this.onTable = false;
         this.tmpSatisfaction = 0;
         this.minNumbersOfPlayers = minNumbersOfPlayers;
+        this.mainGameId = mainGameId;
     }
 
     public ArrayList<Player> getFittedPlayers() {
@@ -41,5 +43,9 @@ public class GameCopy {
 
     public int getMinNumbersOfPlayers() {
         return minNumbersOfPlayers;
+    }
+
+    public int getMainGameId(){
+        return mainGameId;
     }
 }

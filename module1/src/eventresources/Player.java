@@ -70,4 +70,8 @@ public class Player {
     public void setTmpSatisfaction(float tmpSatisfaction) {
         this.tmpSatisfaction = tmpSatisfaction;
     }
+
+    public Integer getId() {
+        return id;
+    }
 }

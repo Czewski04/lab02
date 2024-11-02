@@ -1,4 +1,4 @@
-package othermechanics;
+package comparators;
 
 import eventresources.Player;
 

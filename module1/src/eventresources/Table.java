@@ -40,4 +40,8 @@ public class Table {
     public Integer getPlaces() {
         return places;
     }
+
+    public Integer getId(){
+        return id;
+    }
 }

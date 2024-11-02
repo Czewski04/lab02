@@ -10,7 +10,6 @@ public class Main {
         attempt2(event);
         attempt3(event);
         attempt4(event);
-        //attempt5(event);
     }
 
     public static void attempt1(Event event) throws FileNotFoundException {
@@ -52,15 +51,4 @@ public class Main {
         event.calculateScore();
         event.compareResults();
     }
-
-//    public static void attempt5(Event event) throws FileNotFoundException {
-//        event.fillWeights();
-//        event.fillListOfGames();
-//        event.fillListOfTables();
-//        event.fillListOfPlayers();
-//        //event.fitting8PlayedGamesPriority();
-//        //event.fitting7PlayedGamesPriority();
-//        event.fitting1BaseFitting();
-//        event.showTestResults();
-//    }
 }
