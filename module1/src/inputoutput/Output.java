@@ -60,7 +60,7 @@ public class Output {
         System.out.println();
     }
 
-    public static void showStatistics(HashMap<String, Object> statistics, int numberOfTables) {
+    public static void showStatistics(HashMap<String, Object> statistics, int numberOfTables, float[] weights) {
         System.out.println("\n---------------------------------------------------");
         System.out.println("---------------- Statistics Table -----------------");
         System.out.println("+---------------------------+---------------------+");
@@ -79,6 +79,9 @@ public class Output {
         System.out.printf("| %-25s | %-19s |%n", "Games on tables", statistics.get("games on tables"));
         System.out.printf("| %-25s | %-19s |%n", "Satisfaction", statistics.get("satisfaction"));
         System.out.printf("| %-25s | %-19s |%n", "Penalty", statistics.get("penalty"));
+        System.out.printf("| %-25s | %-19s |%n", "Weight 1 (W1)", weights[0]);
+        System.out.printf("| %-25s | %-19s |%n", "Weight 2 (W2)", weights[1]);
+        System.out.printf("| %-25s | %-19s |%n", "Weight 2 (W3)", weights[2]);
         System.out.println("+---------------------------+---------------------+");
     }
 }

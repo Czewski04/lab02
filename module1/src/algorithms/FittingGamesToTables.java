@@ -108,8 +108,10 @@ public class FittingGamesToTables {
         int playersInGames;
         int playersAtTheTable;
         int gamesOnTable;
+        int safetyValve = 0;
 
         do{
+            safetyValve++;
             for(Table table : tables) {
                 done = false;
                 if(table.getFreePlaces() > 0){
@@ -151,7 +153,7 @@ public class FittingGamesToTables {
                     gamesOnTable++;
                 }
             }
-        }while(sumOfFreePlaces>0 && playersInGames!=playersAtTheTable && gamesOnTable<games.size());
+        }while(sumOfFreePlaces>0 && playersInGames!=playersAtTheTable && gamesOnTable<games.size() && safetyValve<1000);
     }
 
     public static void clearNotFullTables(ArrayList<GameCopy> gamesReadyToPlay, ArrayList<Table> tables) {

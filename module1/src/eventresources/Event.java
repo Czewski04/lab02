@@ -169,19 +169,19 @@ public class Event {
         switch(bestResultIndex){
             case 0:
                 Output.showTableArrangement(listOfTables1);
-                Output.showStatistics(Scoring.calculateStatistics(mapOfGames1, listOfPlayers1, listOfTables1, weights), listOfTables1.size());
+                Output.showStatistics(Scoring.calculateStatistics(mapOfGames1, listOfPlayers1, listOfTables1, weights), listOfTables1.size(), weights);
                 break;
             case 1:
                 Output.showTableArrangement(listOfTables2);
-                Output.showStatistics(Scoring.calculateStatistics(mapOfGames2, listOfPlayers2, listOfTables2, weights), listOfTables2.size());
+                Output.showStatistics(Scoring.calculateStatistics(mapOfGames2, listOfPlayers2, listOfTables2, weights), listOfTables2.size(), weights);
                 break;
             case 2:
                 Output.showTableArrangement(listOfTables3);
-                Output.showStatistics(Scoring.calculateStatistics(mapOfGames3, listOfPlayers3, listOfTables3, weights), listOfTables3.size());
+                Output.showStatistics(Scoring.calculateStatistics(mapOfGames3, listOfPlayers3, listOfTables3, weights), listOfTables3.size(), weights);
                 break;
             case 3:
                 Output.showTableArrangement(listOfTables);
-                Output.showStatistics(Scoring.calculateStatistics(mapOfGames, listOfPlayers, listOfTables, weights), listOfTables.size());
+                Output.showStatistics(Scoring.calculateStatistics(mapOfGames, listOfPlayers, listOfTables, weights), listOfTables.size(), weights);
                 break;
         }
 
