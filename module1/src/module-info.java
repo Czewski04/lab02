@@ -1,2 +1,2 @@
-module lab02 {
+module lab02.pop {
 }
