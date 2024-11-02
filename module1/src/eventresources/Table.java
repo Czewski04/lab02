@@ -3,10 +3,10 @@ package eventresources;
 import java.util.ArrayList;
 
 public class Table {
-    private Integer id;
-    private Integer places;
+    private final Integer id;
+    private final Integer places;
     private Integer freePlaces;
-    private ArrayList<GameCopy> gamesOnTable;
+    private final ArrayList<GameCopy> gamesOnTable;
     private boolean full;
 
     public Table(Integer id, Integer places) {

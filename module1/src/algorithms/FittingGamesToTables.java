@@ -53,7 +53,7 @@ public class FittingGamesToTables {
 
     public static void clearOverloadedTabelsAndRefitting(ArrayList <GameCopy> games, ArrayList<Table> tables) {
         games.sort(new GameComparator());
-        boolean done = false;
+        boolean done;
         for(Table table : tables) {
             done = false;
             if(table.getGamesOnTable().size()>1 || table.getFreePlaces()>1){
@@ -69,10 +69,8 @@ public class FittingGamesToTables {
                                 }
                                 removeGameFromTable(table);
                                 addingGameToTable(gameCopy, table);
-                                if(table.getFreePlaces()>0)
-                                    table.setFull(false);
-                                else
-                                    table.setFull(true);
+                                table.setFull(table.getFreePlaces() <= 0);
+
                                 done = true;
                                 break;
                             }
@@ -96,7 +94,6 @@ public class FittingGamesToTables {
 
     private static void clearPlayer(GameCopy gameCopy) {
         gameCopy.getFittedPlayers().getLast().setTmpSatisfaction(0);
-        gameCopy.getFittedPlayers().getLast().setFittedGameId(null);
         gameCopy.getFittedPlayers().getLast().setFitted(false);
         gameCopy.getFittedPlayers().getLast().setSatisfaction(0);
         gameCopy.getFittedPlayers().getLast().setGameInPersonalRanking(0);
@@ -106,11 +103,11 @@ public class FittingGamesToTables {
 
     public static void complementFreePlaces(ArrayList <GameCopy> games, ArrayList<Table> tables) {
         games.sort(new GameComparator());
-        boolean done = false;
-        int sumOfFreePlaces = 0;
-        int playersInGames = 0;
-        int playersAtTheTable = 0;
-        int gamesOnTable = 0;
+        boolean done;
+        int sumOfFreePlaces;
+        int playersInGames;
+        int playersAtTheTable;
+        int gamesOnTable;
 
         do{
             for(Table table : tables) {
@@ -127,10 +124,7 @@ public class FittingGamesToTables {
                                         clearPlayer(gameCopy);
                                     }
                                     addingGameToTable(gameCopy, table);
-                                    if(table.getFreePlaces()>0)
-                                        table.setFull(false);
-                                    else
-                                        table.setFull(true);
+                                    table.setFull(table.getFreePlaces() <= 0);
                                     done = true;
                                     break;
                                 }

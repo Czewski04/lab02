@@ -1,4 +1,4 @@
-package othermechanics;
+package inputoutput;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,8 +12,7 @@ public class Reader {
             scanner.nextLine();
         }
         String line = scanner.nextLine();
-        String[] elements = line.split("; ");
-        return elements;
+        return line.split("; ");
     }
 
     public static String[] tableReader(int counter) throws FileNotFoundException {
@@ -23,8 +22,7 @@ public class Reader {
             scanner.nextLine();
         }
         String line = scanner.nextLine();
-        String[] elements = line.split("; ");
-        return elements;
+        return line.split("; ");
     }
 
     public static String[] playerReader(int counter) throws FileNotFoundException {
@@ -34,17 +32,43 @@ public class Reader {
             scanner.nextLine();
         }
         String line = scanner.nextLine();
-        String[] elements = line.split("; ");
-        return elements;
+        return line.split("; ");
     }
 
     public static float[] weightReader() {
         float[] weights = new float[3];
-        Scanner scanner = new Scanner(System.in);
         for(int i=0; i<3; i++){
-            weights[i] = scanner.nextFloat();
+            weights[i] = readAndCheckWeights(i);
         }
         return weights;
     }
 
+    public static float readAndCheckWeights(int i){
+        Scanner scanner = new Scanner(System.in);
+        float weight;
+
+        switch(i){
+            case 0:
+                System.out.println("Enter first weight (W1). Weight of players:");
+                break;
+            case 1:
+                System.out.println("Enter second weight (W2). Weight of players satisfaction:");
+                break;
+            case 2:
+                System.out.println("Enter third weight (W3). Weight of penalty:");
+                break;
+        }
+
+        try{
+            weight = scanner.nextFloat();
+            if(weight <= 0){
+                throw new Exception();
+            }
+        }catch (Exception e){
+            System.out.println("Your weight cannot be a letter, must be a number greater than 0! Try enter it again.");
+            return readAndCheckWeights(i);
+        }
+
+        return weight;
+    }
 }

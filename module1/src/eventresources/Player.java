@@ -3,12 +3,11 @@ package eventresources;
 import java.util.ArrayList;
 
 public class Player {
-    private Integer id;
-    private ArrayList<Integer> preferredGamesList;
+    private final Integer id;
+    private final ArrayList<Integer> preferredGamesList;
     private boolean fitted;
     private boolean atTheTable;
     private Integer gameInPersonalRanking;
-    private Integer fittedGameId;
     private float satisfaction;
     private float tmpSatisfaction;
 
@@ -19,7 +18,6 @@ public class Player {
         this.fitted = false;
         this.atTheTable = false;
         this.gameInPersonalRanking = null;
-        this.fittedGameId = null;
         this.satisfaction = 0;
     }
 
@@ -31,16 +29,12 @@ public class Player {
         this.atTheTable = atTheTable;
     }
 
-    public boolean isFitted() {
-        return fitted;
+    public boolean isNotFitted() {
+        return !fitted;
     }
 
     public void setFitted(boolean fitted) {
         this.fitted = fitted;
-    }
-
-    public void setFittedGameId(Integer fittedGameId) {
-        this.fittedGameId = fittedGameId;
     }
 
     public Integer getGameInPersonalRanking() {

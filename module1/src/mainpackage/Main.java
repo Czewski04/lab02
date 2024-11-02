@@ -19,7 +19,7 @@ public class Main {
         event.fillListOfPlayers();
         event.fitting1BaseFitting();
         event.calculateScore();
-        event.copyToListst1();
+        event.copyLists1();
         event.clearLists();
     }
 
@@ -29,7 +29,7 @@ public class Main {
         event.fillListOfPlayers();
         event.fitting2ForHighPenalty();
         event.calculateScore();
-        event.copyToListst2();
+        event.copyLists2();
         event.clearLists();
     }
 
@@ -39,7 +39,7 @@ public class Main {
         event.fillListOfPlayers();
         event.fitting3PlayedGamesPriorityForHighPenalty();
         event.calculateScore();
-        event.copyToListst3();
+        event.copyLists3();
         event.clearLists();
     }
 

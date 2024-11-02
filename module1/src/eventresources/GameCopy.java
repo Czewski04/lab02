@@ -3,11 +3,11 @@ package eventresources;
 import java.util.ArrayList;
 
 public class GameCopy {
-    private ArrayList<Player> fittedPlayers;
+    private final ArrayList<Player> fittedPlayers;
     private boolean onTable;
     private float tmpSatisfaction;
-    private int minNumbersOfPlayers;
-    private int mainGameId;
+    private final int minNumbersOfPlayers;
+    private final int mainGameId;
 
     public GameCopy(int mainGameId, int minNumbersOfPlayers) {
         this.fittedPlayers = new ArrayList<>();

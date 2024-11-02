@@ -3,10 +3,10 @@ package eventresources;
 import java.util.ArrayList;
 
 public class Game {
-    private Integer numberOfCopies;
-    private Integer minNumberOfPlayers;
-    private Integer maxNumberOfPlayers;
-    private ArrayList<GameCopy> CopiesList;
+    private final Integer numberOfCopies;
+    private final Integer minNumberOfPlayers;
+    private final Integer maxNumberOfPlayers;
+    private final ArrayList<GameCopy> CopiesList;
 
     public Game(Integer gameId, Integer numberOfCopies, Integer minNumberOfPlayers, Integer maxNumberOfPlayers) {
         this.maxNumberOfPlayers = maxNumberOfPlayers;

@@ -2,14 +2,12 @@ package eventresources;
 
 import algorithms.FittingGamesToTables;
 import algorithms.FittingPlayersToGames;
-import othermechanics.Reader;
+import inputoutput.Output;
+import inputoutput.Reader;
 import othermechanics.Scoring;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Event {
 
@@ -47,23 +45,19 @@ public class Event {
                 i++;
             }
         }
-        catch (NoSuchElementException e){
-            e.getMessage();
-        }
+        catch (NoSuchElementException ignore){}
     }
 
     public void fillListOfTables() throws FileNotFoundException {
         listOfTables = new ArrayList<>();
         int i=0;
         try {
-            while(true){
+            while (true) {
                 listOfTables.add(new Table(Integer.valueOf(Reader.tableReader(i)[0]), Integer.valueOf(Reader.tableReader(i)[1])));
                 i++;
             }
         }
-        catch (NoSuchElementException e) {
-            e.getMessage();
-        }
+        catch (NoSuchElementException ignore){}
     }
 
     public void fillListOfPlayers() throws FileNotFoundException {
@@ -82,9 +76,7 @@ public class Event {
                 i++;
             }
         }
-        catch (NoSuchElementException e){
-            e.getMessage();
-        }
+        catch (NoSuchElementException ignore){}
     }
 
     public void fillWeights() {
@@ -134,7 +126,7 @@ public class Event {
         listOfGames.clear();
     }
 
-    public void copyToListst1(){
+    public void copyLists1(){
         listOfTables1 = new ArrayList<>(listOfTables);
         listOfPlayers1 = new ArrayList<>(listOfPlayers);
         listOfGames1 = new ArrayList<>(listOfGames);
@@ -142,7 +134,7 @@ public class Event {
         scores[0] = scores[3];
     }
 
-    public void copyToListst2(){
+    public void copyLists2(){
         listOfTables2 = new ArrayList<>(listOfTables);
         listOfPlayers2 = new ArrayList<>(listOfPlayers);
         listOfGames2 = new ArrayList<>(listOfGames);
@@ -150,7 +142,7 @@ public class Event {
         scores[1] = scores[3];
     }
 
-    public void copyToListst3(){
+    public void copyLists3(){
         listOfTables3 = new ArrayList<>(listOfTables);
         listOfPlayers3 = new ArrayList<>(listOfPlayers);
         listOfGames3 = new ArrayList<>(listOfGames);
@@ -172,76 +164,26 @@ public class Event {
     }
 
     public void showResults(int bestResultIndex, float bestScore){
-        showBestResult(bestScore);
+        Output.showBestResult(bestScore);
 
         switch(bestResultIndex){
             case 0:
-                showTableArrangement(listOfTables1);
-                Scoring.testCalculateParametrs(mapOfGames1, listOfPlayers1, listOfTables1);
+                Output.showTableArrangement(listOfTables1);
+                Output.showStatistics(Scoring.calculateStatistics(mapOfGames1, listOfPlayers1, listOfTables1, weights), listOfTables1.size());
                 break;
             case 1:
-                showTableArrangement(listOfTables2);
-                Scoring.testCalculateParametrs(mapOfGames2, listOfPlayers2, listOfTables2);
+                Output.showTableArrangement(listOfTables2);
+                Output.showStatistics(Scoring.calculateStatistics(mapOfGames2, listOfPlayers2, listOfTables2, weights), listOfTables2.size());
                 break;
             case 2:
-                showTableArrangement(listOfTables3);
-                Scoring.testCalculateParametrs(mapOfGames3, listOfPlayers3, listOfTables3);
+                Output.showTableArrangement(listOfTables3);
+                Output.showStatistics(Scoring.calculateStatistics(mapOfGames3, listOfPlayers3, listOfTables3, weights), listOfTables3.size());
                 break;
             case 3:
-                showTableArrangement(listOfTables);
-                Scoring.testCalculateParametrs(mapOfGames, listOfPlayers, listOfTables);
+                Output.showTableArrangement(listOfTables);
+                Output.showStatistics(Scoring.calculateStatistics(mapOfGames, listOfPlayers, listOfTables, weights), listOfTables.size());
                 break;
         }
 
     }
-
-    public void showTableArrangement(ArrayList<Table> tables) {
-        System.out.println("\n=========== Table layout ==========\n");
-        for (Table table : tables) {
-            System.out.println("Table " + table.getId() + ":");
-            System.out.println("-------------------------------------");
-            System.out.printf("%-10s %-10s%n", "Game", "Players");
-            System.out.println("-------------------------------------");
-
-            for (GameCopy gameOnTable : table.getGamesOnTable()) {
-                System.out.printf("%-10d ", gameOnTable.getMainGameId());
-                for (Player playerAtTheTable : gameOnTable.getFittedPlayers()) {
-                    System.out.print(playerAtTheTable.getId() + " ");
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }
-    }
-
-    public void showBestResult(float bestScore) {
-        String scoreStr = " " + bestScore + " ";
-        int frameWidth = 15;
-
-        for (int i = 0; i < frameWidth + 2; i++) {
-            System.out.print("•");
-        }
-        System.out.println();
-
-        System.out.print("•");
-        System.out.print("  BEST RESULT  ");
-        System.out.println("•");
-
-        int padding = (frameWidth - scoreStr.length()) / 2;
-        System.out.print("•");
-        for (int i = 0; i < padding; i++) {
-            System.out.print(" ");
-        }
-        System.out.print(scoreStr);
-        for (int i = 0; i < (frameWidth - scoreStr.length() - padding); i++) {
-            System.out.print(" ");
-        }
-        System.out.println("•");
-
-        for (int i = 0; i < frameWidth + 2; i++) {
-            System.out.print("•");
-        }
-        System.out.println();
-    }
-
 }

@@ -7,16 +7,17 @@ import eventresources.Table;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Scoring {
 
     public static float calculateFinalScore(HashMap<Integer, Game> games, ArrayList<Player> players, ArrayList<Table> tables, float[] weights) {
         float sumOfSat=0;
         int activePlayers=0;
-        int cane=0;
+        int penalty=0;
 
-        int licznik7=0;
-        int licznik9=0;
+        int fullTables=0;
+        int gamesOnTables=0;
 
         for (Player player : players) {
             if(player.isAtTheTable()) {
@@ -26,92 +27,96 @@ public class Scoring {
         }
 
         for(Table table: tables){
-            if(table.getFreePlaces()==table.getPlaces())
-                    licznik7++;
+            if(Objects.equals(table.getFreePlaces(), table.getPlaces()))
+                    fullTables++;
         }
 
         for(Game game: games.values()){
             for (GameCopy gameCopy: game.getCopiesList()){
                 if(gameCopy.isOnTable())
-                    licznik9++;
+                    gamesOnTables++;
             }
         }
 
-        if(tables.size()-licznik7-licznik9<0)
-            cane = tables.size()-licznik7-licznik9;
+        if(tables.size()-fullTables-gamesOnTables<0)
+            penalty = tables.size()-fullTables-gamesOnTables;
 
-        return weights[0]*activePlayers+weights[1]*sumOfSat+weights[2]*cane;
+        return weights[0]*activePlayers+weights[1]*sumOfSat+weights[2]*penalty;
     }
 
-    public static void testCalculateParametrs(HashMap<Integer, Game> games, ArrayList<Player> players, ArrayList<Table> tables){
-        int licznik1=0;
-        int licznik2=0;
-        int licznik3=0;
-        int licznik4=0;
-        int licznik5=0;
-        int licznik6=0;
-        int licznik7=0;
-        int licznik8=0;
-        int licznik9=0;
-        int licznik10=0;
+    public static HashMap<String, Object> calculateStatistics(HashMap<Integer, Game> games, ArrayList<Player> players, ArrayList<Table> tables, float[] weights) {
+
+        HashMap<String, Object> statistics = new HashMap<>();
+
+        int dontPlay=0;
+        int firstChoice=0;
+        int secondChoice=0;
+        int thirdChoice=0;
+        int fullTables=0;
+        int freePlaces=0;
+        int emptyTables=0;
+        int moreThanOneGameOnTable=0;
+        int gamesOnTables=0;
+        int fourthChoice=0;
         float sumOfSat=0;
-        int tyle_gra=0;
-        int kara=0;
+        int activePlayers=0;
+        int penalty=0;
 
         for (Player player : players) {
             if(player.isAtTheTable()) {
                 sumOfSat += player.getSatisfaction();
-                tyle_gra++;
+                activePlayers++;
             }
 
             if(!player.isAtTheTable())
-                licznik1++;
+                dontPlay++;
             else if(player.getGameInPersonalRanking()==1)
-                licznik2++;
+                firstChoice++;
             else if(player.getGameInPersonalRanking()==2)
-                licznik3++;
+                secondChoice++;
             else if(player.getGameInPersonalRanking()==3)
-                licznik4++;
+                thirdChoice++;
             else if(player.getGameInPersonalRanking()==4)
-                licznik10++;
+                fourthChoice++;
         }
 
         for(Table table: tables){
             if(table.getGamesOnTable().size()>1)
-                licznik8++;
+                moreThanOneGameOnTable++;
             if(table.isFull())
-                licznik5++;
+                fullTables++;
             else{
-                if(table.getFreePlaces()==table.getPlaces())
-                    licznik7++;
-                licznik6 += table.getFreePlaces();
+                if(Objects.equals(table.getFreePlaces(), table.getPlaces()))
+                    emptyTables++;
+                freePlaces += table.getFreePlaces();
             }
         }
 
         for(Game game: games.values()){
             for (GameCopy gameCopy: game.getCopiesList()){
                 if(gameCopy.isOnTable())
-                    licznik9++;
+                    gamesOnTables++;
             }
         }
 
-        if(tables.size()-licznik7-licznik9<0)
-            kara = tables.size()-licznik7-licznik9;
+        if(tables.size()-emptyTables-gamesOnTables<0)
+            penalty = tables.size()-emptyTables-gamesOnTables;
 
 
-        System.out.println("\n" + licznik1 + " players don't play");
-        System.out.println(tyle_gra + " players play\n");
-        System.out.println("first choice game: "+ licznik2);
-        System.out.println("second choice game: "+ licznik3);
-        System.out.println("third choice game: "+ licznik4);
-        System.out.println("fourth choice game: "+ licznik10);
-        System.out.println("\nfull tables: " + licznik5 + " of "+ tables.size());
-        System.out.println("left: "+ licznik6 + " free places");
-        System.out.println("empty tables: " + licznik7);
-        System.out.println("more than one game on: " + licznik8 + " tables");
-        System.out.println("all games on tables: " + licznik9);
+        statistics.put("players don't play", dontPlay);
+        statistics.put("players play", activePlayers);
+        statistics.put("first choice game", firstChoice);
+        statistics.put("second choice game", secondChoice);
+        statistics.put("third choice game", thirdChoice);
+        statistics.put("fourth choice game", fourthChoice);
+        statistics.put("full tables", fullTables);
+        statistics.put("more than one game on tables", moreThanOneGameOnTable);
+        statistics.put("games on tables", gamesOnTables);
+        statistics.put("free places", freePlaces);
+        statistics.put("empty tables", emptyTables);
+        statistics.put("satisfaction", sumOfSat*weights[1]);
+        statistics.put("penalty", penalty*weights[2]);
 
-        System.out.println("\nsatisfaction: " + sumOfSat);
-        System.out.println("penalty: " + kara);
+        return statistics;
     }
 }
